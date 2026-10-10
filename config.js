@@ -3,7 +3,7 @@
 window.AUY_CONFIG = {
   /* Supabase dashboard > Project Settings > API: the Project URL and the anon (public) key. NEVER the service key. */
   supabase_url: 'https://tvrmzyxhmktjoymmsusk.supabase.co',
-  supabase_anon_key: '',
+  supabase_anon_key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2cm16eXhobWt0am95bW1zdXNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0NDE3MjQsImV4cCI6MjEwNzAxNzcyNH0.0SOnabohd5QoVDtpYMhwhFt-h53bD8OpKhaWt_jqCeA',
   /* the email_domain line of the server's supabase.txt */
   email_domain: 'players.auyamaland.invalid',
 
