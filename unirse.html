@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auyamaland 3 · Discord</title>
+<meta name="description" content="Catorce noches. Después, nada. Entra al Discord de Auyamaland 3.">
+<!-- Link previews (WhatsApp, Discord, Instagram): absolute URLs. -->
+<meta property="og:title" content="Te invitaron a Auyamaland 3">
+<meta property="og:description" content="Catorce noches. Después, nada.">
+<meta property="og:image" content="https://tvrmzyxhmktjoymmsusk.supabase.co/storage/v1/object/public/discord/logo.png">
+<meta name="theme-color" content="#1a120d">
+<link rel="icon" href="https://tvrmzyxhmktjoymmsusk.supabase.co/storage/v1/object/public/discord/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #15100c; --panel: #211812; --edge: #3a2a1f; --text: #eadfd3; --muted: #a8968a;
+    --pumpkin: #c0622b; --pumpkin-hi: #d8763a; --gold: #c9963a; --blood: #b4513d; --discord: #5865f2;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(192, 98, 43, .18), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 2px, transparent 2px 4px),
+      var(--bg);
+    color: var(--text); font: 16px/1.55 Inter, system-ui, sans-serif;
+    display: grid; place-items: center; padding: 32px 16px; min-height: 100vh;
+  }
+  main { width: 100%; max-width: 520px; text-align: center; }
+  .logo { width: 100%; max-width: 460px; height: auto; image-rendering: auto; filter: drop-shadow(0 8px 24px rgba(0,0,0,.6)); }
+  .card {
+    margin-top: 28px; background: var(--panel); border: 2px solid var(--edge); border-radius: 6px;
+    padding: 28px 24px; box-shadow: inset 0 -4px 0 rgba(0,0,0,.25), 0 20px 40px rgba(0,0,0,.35);
+  }
+  h1 { font: 700 26px/1.2 "Pixelify Sans", Inter, sans-serif; margin: 0 0 6px; letter-spacing: .5px; }
+  .tag { font-family: "Pixelify Sans", sans-serif; color: var(--gold); font-size: 15px; margin: 0 0 18px; }
+  p { margin: 0 0 14px; color: var(--muted); }
+  p strong { color: var(--text); font-weight: 600; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+    margin-top: 8px; padding: 14px 18px; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none;
+    background: var(--discord); color: #fff; font: 600 16px Inter, sans-serif;
+    box-shadow: inset 0 -4px 0 rgba(0,0,0,.25); transition: transform .08s, filter .15s;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn:active { transform: translateY(2px); box-shadow: inset 0 -2px 0 rgba(0,0,0,.25); }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .steps { text-align: left; margin: 22px 0 0; padding: 18px 0 0; border-top: 1px solid var(--edge); list-style: none; counter-reset: s; }
+  .steps li { counter-increment: s; position: relative; padding-left: 34px; margin-bottom: 10px; color: var(--muted); font-size: 14.5px; }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 3px;
+    background: #2e2119; color: var(--gold); font: 600 13px/22px "Pixelify Sans", sans-serif; text-align: center;
+  }
+  .error {
+    display: none; text-align: left; margin-bottom: 18px; padding: 12px 14px; border-radius: 4px;
+    background: rgba(180, 81, 61, .12); border: 1px solid rgba(180, 81, 61, .45); color: #e9b3a7; font-size: 14.5px;
+  }
+  .small { font-size: 13px; color: #7d6d62; margin-top: 18px; }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="https://tvrmzyxhmktjoymmsusk.supabase.co/storage/v1/object/public/discord/logo.png" alt="Auyamaland 3">
+  <div class="card">
+    <div class="error" id="error" role="alert"></div>
+    <h1 id="title">El Discord de Auyamaland 3</h1>
+    <p class="tag">Catorce noches. Después, nada.</p>
+    <p id="lead">Todo pasa aquí: el horario de cada noche, los eventos, las facciones y el final.</p>
+    <a class="btn" id="join" href="#">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.3 18.3 0 0 0-5.5 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.8-9.7-3.6-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
+      Entrar con Discord
+    </a>
+    <ol class="steps">
+      <li><strong>Entra al Discord</strong> con el botón. Discord te pedirá permiso para unirte.</li>
+      <li><strong>Descarga el mod</strong> en esta web e instálalo.</li>
+      <li><strong>Crea tu cuenta</strong> en el juego con <code>/register</code> y vincúlala en <strong>#bienvenida</strong>.</li>
+    </ol>
+    <p class="small">Solo pedimos tu nombre de Discord y permiso para meterte al servidor. Nada más.</p>
+  </div>
+</main>
+<script>
+  // The project's functions address (same project as the rest of the site).
+  const FUNCTIONS = 'https://tvrmzyxhmktjoymmsusk.supabase.co/functions/v1';
+  const q = new URLSearchParams(location.search);
+  const ref = (q.get('r') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+  document.getElementById('join').href = FUNCTIONS + '/discord-join' + (ref ? '?r=' + ref : '');
+  if (ref) {
+    document.getElementById('title').textContent = 'Te invitaron a Auyamaland 3';
+    document.getElementById('lead').innerHTML = 'Alguien quiere que entres. <strong>Si entras por este enlace, los dos salen ganando</strong> la primera noche.';
+  }
+  const errors = {
+    'cancelado': 'Cancelaste la autorización en Discord. Pulsa el botón otra vez cuando quieras.',
+    'autorizacion': 'Discord no confirmó la autorización. Prueba otra vez.',
+    'demasiados-servidores': 'Estás en 100 servidores de Discord, el máximo. Sal de alguno y vuelve a intentarlo.',
+    'bloqueado': 'Discord no te deja entrar a este servidor.',
+    'discord': 'Discord no respondió bien. Prueba de nuevo en un minuto.',
+  };
+  const e = q.get('error');
+  if (e) {
+    const box = document.getElementById('error');
+    box.textContent = errors[e] || errors.discord;
+    box.style.display = 'block';
+  }
+</script>
+</body>
+</html>
