@@ -2,156 +2,120 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Auyamaland</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Auyamaland 3</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Catorce noches. Después, nada. El servidor, el tablero de reliquias, el mapa y tu sombra.">
+<meta name="theme-color" content="#15100c">
 <link rel="icon" href="textures/item/pumpkin_small.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
-<style>
-/* Layout: a living night scene on top (logo, the server's state, the download button), the season bar on the table's
-   edge, then one long dark table: the relic case, the map beside your shadow's chest, the enchanted books.
-   Tabs stick out of the screen's sides: the wall on the right, the rules on the left (at the bottom on phones).
-   Spacing uses only 4 8 16 24 32 48 64. Every colour is in theme.css. */
-:root{--s1:4px;--s2:8px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;color-scheme:dark}
-*{box-sizing:border-box}[hidden]{display:none!important}
-html,body{background:var(--wood-lo)}
-body{margin:0;color:var(--t1);font-family:MC,monospace;font-size:16px;line-height:20px;-webkit-font-smoothing:none;overflow-x:hidden}
-a{color:inherit}
-h2{font-weight:400;font-size:32px;line-height:36px;margin:0;color:var(--head)}
-.sub{color:var(--t2);margin:var(--s2) 0 0}
-:focus-visible{outline:2px solid var(--t1);outline-offset:2px}
-
-/* hero: everything in normal flow, so nothing can overlap at any width */
-.hero{position:relative;min-height:440px;display:flex;flex-direction:column;align-items:center;padding:var(--s4) var(--s3) var(--s3)}
-#scene{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
-.logo{position:relative;display:block;width:min(480px,calc(100vw - 160px));height:auto;aspect-ratio:4/1;image-rendering:pixelated}
-.subheader{position:relative;margin-top:var(--s2);color:var(--t2);text-align:center;max-width:480px}
-.state{position:relative;margin-top:var(--s4);color:var(--t1);background:rgba(18,11,18,.8);padding:var(--s2);box-shadow:0 0 0 2px rgba(18,11,18,.8);text-align:center}
-.state.open b{color:var(--ok);font-weight:400}
-.state.down b{color:var(--error);font-weight:400}
-.dlbtn{position:relative;margin-top:var(--s3);font:inherit;font-size:16px;color:var(--accent-text);background:var(--accent);border:0;padding:var(--s2) var(--s3);cursor:pointer;display:flex;gap:var(--s2);align-items:center;
-  box-shadow:inset 0 0 0 2px var(--ink),inset 2px 2px 0 2px var(--accent-hi),inset -2px -2px 0 2px var(--accent-lo),8px 8px 0 rgba(0,0,0,.4)}
-.dlbtn img{width:32px;height:32px;image-rendering:pixelated}
-.dlbtn:hover{filter:brightness(1.1)}.dlbtn:active{transform:translateY(2px)}
-.pfpwrap{position:absolute;right:var(--s3);top:var(--s3)}
-.dayname{position:relative;align-self:flex-start;margin-top:auto;padding-top:var(--s4);color:var(--t1)}
-
-/* the table's edge with the season */
-.edge{background:var(--edge);padding:0 var(--s3) var(--s3);box-shadow:inset 0 4px 0 var(--edge-hi),inset 0 -8px 0 rgba(0,0,0,.35)}
-.edge .in{max-width:1100px;margin:0 auto}
-.hint{color:var(--t2);text-align:center;padding-bottom:var(--s2)}
-.hint button{font:inherit;color:var(--t1);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
-
-/* the table */
-.table{background:var(--wood);padding:var(--s6) var(--s3) var(--s7);
-  background-image:linear-gradient(var(--wood-lo) 2px,transparent 2px),linear-gradient(90deg,var(--wood-hi) 2px,transparent 2px),linear-gradient(90deg,var(--wood-lo) 2px,transparent 2px);
-  background-size:100% 64px,256px 64px,384px 128px;background-position:0 0,40px 0,200px 32px}
-.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:var(--s7)}
-.head{margin-bottom:var(--s4)}
-.cols{display:grid;grid-template-columns:auto 1fr;gap:var(--s5);align-items:start}
-.cols>*{min-width:0}
-.empty{color:var(--t2)}
-
-.vitrina{background:var(--case);padding:var(--s5);position:relative;--k-cell:120px;--k-gap:8px;justify-self:start;
-  box-shadow:inset 0 0 0 2px var(--ink),inset 0 0 0 6px var(--case-frame),inset 0 0 0 8px var(--case-frame-lo),inset 0 0 0 10px var(--ink),8px 8px 0 rgba(0,0,0,.45);
-  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 2px,transparent 2px 4px),repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 2px,transparent 2px 8px)}
-.vitrina::before{content:"";position:absolute;left:10px;right:10px;top:10px;height:8px;background:rgba(255,255,255,.06)}
-.k-tenth{padding-top:var(--s2);border-top:2px solid rgba(0,0,0,.35)}
-.case .k-ficha{max-width:340px}
-
-.mapitem{background:var(--paper);padding:var(--s3);box-shadow:inset 0 0 0 2px var(--paper-ink),inset 0 0 0 6px var(--paper-lo),inset 0 0 0 8px var(--paper-edge),8px 8px 0 rgba(0,0,0,.45)}
-.mapitem canvas{display:block;width:384px;height:384px;max-width:100%;height:auto;aspect-ratio:1;image-rendering:pixelated;box-shadow:0 0 0 2px #765b3f}
-.mapcap{color:var(--paper-ink);margin-top:var(--s2);display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
-.mapnext{color:var(--paper-soft);margin-top:var(--s1)}
-.chestgui{background:var(--chest);padding:var(--s3);box-shadow:inset 0 0 0 2px var(--ink),inset 2px 2px 0 2px var(--chest-hi),inset -2px -2px 0 2px var(--chest-lo),8px 8px 0 rgba(0,0,0,.45)}
-.chestgui.rotten{box-shadow:inset 0 0 0 2px var(--ink),inset 0 0 0 6px var(--rotten),inset 0 0 0 8px var(--ink),8px 8px 0 rgba(0,0,0,.45)}
-.chestgui h3{font-weight:400;font-size:16px;color:var(--t1);margin:0 0 var(--s3);display:flex;justify-content:space-between;gap:var(--s3)}
-.chestgui h3 small{font-size:16px;color:var(--lab)}
-.chestgui .msg{color:var(--t2);margin:0 0 var(--s3)}
-.lectern{background:var(--lectern);padding:var(--s5) var(--s4);box-shadow:inset 0 0 0 2px var(--ink),inset 2px 2px 0 2px var(--lectern-hi),inset -2px -2px 0 2px var(--lectern-lo),8px 8px 0 rgba(0,0,0,.45)}
-.foot{text-align:center;color:var(--t2);padding:var(--s4) var(--s3) var(--s5)}
-.foot a{color:var(--t1)}
-.foot .demo{color:var(--head);margin-bottom:var(--s2)}
-
-/* kit additions */
-.k-xp i{display:none}
-.k-kv .on{color:#55FF55}
-.k-post .ph{cursor:zoom-in}
-.k-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s2);margin:var(--s1) 0 var(--s2);max-width:320px}
-.k-photos img{width:100%;aspect-ratio:1;object-fit:cover;box-shadow:0 0 0 2px var(--page-ink)}
-.k-photos.one{grid-template-columns:1fr}.k-photos.one img{aspect-ratio:auto}
-.k-comments{margin-top:var(--s2);padding-left:var(--s3);box-shadow:inset 2px 0 0 var(--page-edge)}
-.k-comment{margin:0 0 var(--s2)}
-.k-comment .nm{color:var(--paper-title)}.k-comment .tm{color:#9a6c3b}
-.k-del{color:var(--page-soft)}
-.k-more{margin-top:var(--s3)}
-.k-note{color:var(--page-soft);margin:var(--s2) 0 0}
-.k-files{color:var(--page-soft);margin:0 0 var(--s3)}
-.k-check{display:flex;gap:var(--s2);align-items:center;margin-bottom:var(--s3)}
-.k-row{display:flex;gap:var(--s2);flex-wrap:wrap}
-.k-rule h3{font-weight:400;color:var(--paper-title);margin:0 0 var(--s1)}
-.k-rule p{margin:0 0 var(--s2)}
-.k-rule{margin-bottom:var(--s3)}
-.k-steps{padding-left:var(--s4);margin:var(--s3) 0}
-.k-steps li{margin-bottom:var(--s2)}
-.k-acc .who{display:flex;gap:var(--s3);align-items:center}
-.k-acc .who h3{margin:0}
-.k-acc b{font-weight:400;color:var(--paper-title)}
-.k-btn[disabled]{opacity:.5;cursor:default}
-body .k-btn[aria-pressed="true"]{background:var(--btn);color:var(--btn-text);box-shadow:inset 0 0 0 2px var(--ink),inset 2px 2px 0 2px var(--btn-hi),inset -2px -2px 0 2px var(--btn-lo)}
-a.k-btn{display:inline-block;text-decoration:none}
-
-@media (max-width:980px){.cols{grid-template-columns:1fr}.vitrina{--k-cell:96px;justify-self:center}.mapitem{justify-self:center;width:100%;max-width:416px}.case .k-ficha{max-width:none}}
-@media (max-width:760px){
-  .hero{min-height:400px}
-  body .k-tabs.left,body .k-tabs.right{top:auto;bottom:var(--s3);flex-direction:row}
-  body .k-tabs.left .k-tab,body .k-tabs.right .k-tab{transform:none;padding:var(--s2)}
-  .subheader{display:none}
-  body .k-pages{display:block;overflow:auto}
-  body .k-pg{overflow:visible}
-  body .k-pg+.k-pg{box-shadow:inset 0 2px 0 var(--page-edge)}
-  body .k-rose{display:none}
-}
-@media (max-width:520px){.vitrina{--k-cell:78px;padding:var(--s3)}.lectern{padding:var(--s4) var(--s3)}.table{padding-top:var(--s5)}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="hero">
-  <canvas id="scene" aria-hidden="true"></canvas>
-  <img class="logo" src="logo.png" alt="Auyamaland 3" width="960" height="240">
-  <div class="subheader" id="subheader"></div>
-  <div class="state" id="state">Mirando el servidor…</div>
-  <button class="dlbtn" id="dlbtn" type="button">Descargar</button>
-  <div class="pfpwrap" id="pfp"></div>
-  <div class="dayname" id="dayname"></div>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img class="px" src="textures/item/pumpkin_small.png" alt=""><span>Auyamaland 3</span></a>
+    <nav class="nav" id="nav" aria-label="Secciones">
+      <a class="btn sm" href="#temporada">Temporada</a>
+      <a class="btn sm" href="#reliquias">Reliquias</a>
+      <a class="btn sm" href="#mapa">Mapa</a>
+      <a class="btn sm" href="#encantamientos">Encantamientos</a>
+      <button class="btn sm" type="button" data-open="reglas">Reglas</button>
+      <button class="btn sm only-menu" type="button" data-open="muro">El muro</button>
+    </nav>
+    <div class="right">
+      <button class="btn sm wall-btn" type="button" data-open="muro" data-tip="El muro|Lo que escriben los jugadores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span>El muro</span><b class="badge" hidden></b></button>
+      <button class="btn sm primary dl-small" type="button" data-open="jugar">Descargar</button>
+      <button class="avatar" type="button" id="avatar" aria-label="Tu cuenta"></button>
+      <button class="btn icon menu-btn" type="button" id="menu" aria-label="Menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
 </header>
-<div class="edge"><div class="in" id="season"></div><div class="hint" id="hint"></div></div>
 
-<main class="table"><div class="wrap">
-  <section aria-labelledby="h-rel">
-    <div class="head"><h2 id="h-rel">Las reliquias</h2><p class="sub">Nueve en el mundo. Cada una se ilumina la primera vez que alguien la equipa.</p></div>
-    <div class="cols case"><div class="vitrina" id="relics"></div>
-      <div class="k-ficha" id="ficha"><h3>El tablero</h3><p>Toca una reliquia para leer por qué manos pasó.</p><p class="d">Las oscuras siguen escondidas en algún lugar.</p></div></div>
+<section class="hero" id="inicio">
+  <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <img class="logo" src="logo.png" alt="Auyamaland 3" width="960" height="240">
+    <div class="now-card">
+      <div class="now-row"><span class="clock" id="clock">--:--</span><span class="tag" id="state">…</span></div>
+      <div class="next" id="next"></div>
+      <div class="next-sub" id="nextsub"></div>
+      <div class="chips" id="chips"></div>
+      <div class="ctas">
+        <button class="btn primary" type="button" data-open="jugar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>Descargar</button>
+        <a class="btn discord" id="discord" href="unirse.html">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.3 18.3 0 0 0-5.5 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.8-9.7-3.6-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>Discord</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section id="temporada" class="wrap">
+    <div class="sec-head"><div class="t"><h2>La temporada</h2><p class="meta" id="season-meta"></p></div></div>
+    <div class="card season"><div class="track" id="track"><div class="rail"><i id="season-fill"></i></div></div></div>
   </section>
-  <section class="cols">
-    <div><div class="head"><h2>El mapa</h2><p class="sub">Solo lo anunciado.</p></div>
-      <div class="mapitem"><canvas id="map" width="128" height="128" aria-label="Mapa con lo anunciado"></canvas>
-        <div class="mapcap"><span id="mapsize"></span><span id="mapscale"></span></div><div class="mapnext" id="mapnext"></div></div></div>
-    <div><div class="head"><h2>Tu sombra</h2><p class="sub">Solo tú lo ves.</p></div><div class="chestgui" id="sombra"></div></div>
+
+  <section id="reliquias" class="wrap">
+    <div class="sec-head"><div class="t"><div class="row"><h2>Reliquias</h2><span class="count" id="relic-count">0 / 10</span></div><p class="muted">Se encienden cuando alguien las equipa por primera vez.</p></div></div>
+    <div class="relics">
+      <div class="relic-grid" id="relics"></div>
+      <div class="card ledger" id="ledger"></div>
+    </div>
   </section>
-  <section>
-    <div class="head"><h2>Libro de encantamientos</h2><p class="sub">Los libros sobre el atril. Pasa el cursor por cada uno.</p></div>
-    <div class="lectern" id="books"></div>
+
+  <section id="mapa" class="wrap">
+    <div class="pair">
+      <div>
+        <div class="sec-head"><div class="t"><h2>El mapa</h2><p class="muted">Solo lo que se ha anunciado.</p></div></div>
+        <div class="card mapcard">
+          <canvas id="map" width="128" height="128" aria-label="Mapa con lo anunciado"></canvas>
+          <div class="cap"><span class="meta" id="mapsize"></span><span class="meta" id="mapscale"></span></div>
+          <div class="faint" id="mapnext" style="font-size:13px"></div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-head"><div class="t"><h2>Tu sombra</h2><p class="muted">Solo tú la ves.</p></div></div>
+        <div class="card shadow" id="sombra"></div>
+      </div>
+    </div>
   </section>
-</div></main>
-<footer class="foot" id="foot"></footer>
+
+  <section id="encantamientos" class="wrap">
+    <div class="sec-head">
+      <div class="t"><h2>Encantamientos</h2><p class="muted">De dónde sale cada nivel.</p></div>
+      <div class="tiers"><span style="color:var(--tier-table)"><i></i>Mesa</span><span style="color:var(--tier-found)"><i></i>Encontrado</span><span style="color:var(--tier-ceiling)"><i></i>Libro de techo</span><span style="color:var(--tier-commons)"><i></i>Único</span></div>
+    </div>
+    <div class="filters" id="filters" style="margin-bottom:16px"></div>
+    <div class="books" id="books"></div>
+  </section>
+</main>
+
+<footer><div class="wrap" id="foot"></div></footer>
+
+<button class="fab" type="button" data-open="muro" aria-label="Abrir el muro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span>El muro</span><b class="badge" hidden></b></button>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Panel" aria-hidden="true">
+  <div class="dh" id="dtabs">
+    <button class="btn sm" type="button" data-tab="muro">El muro</button>
+    <button class="btn sm" type="button" data-tab="reglas">Reglas</button>
+    <button class="btn sm" type="button" data-tab="jugar">Para jugar</button>
+    <button class="btn sm icon close" type="button" id="dclose" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div class="db" id="dbody"></div>
+</aside>
 
 <script src="config.js"></script>
 <script src="textos.js"></script>
 <script src="font.js"></script>
 <script src="sprites.js"></script>
-<script src="mcui.js"></script>
 <script src="mcmap.js"></script>
-<script src="kit.js"></script>
+<script src="ui.js"></script>
 <script src="demo.js"></script>
 <script src="app.js"></script>
 <script src="tune.js"></script>

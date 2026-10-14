@@ -1,7 +1,7 @@
 /* A Minecraft-style map renderer. Everything is drawn on a low-resolution canvas (one map pixel = one canvas pixel)
    that the page scales up by a whole number, so nothing ever leaves the pixel grid.
-   Under the announced places: blank parchment (opts.terrain false) or invented terrain (true). Nothing here is the real
-   world: the season publishes no terrain. */
+   Under the announced places: the world's own map when the server made one (opts.world, from textures/map/), else blank
+   parchment (opts.terrain false) or invented terrain (true). */
 window.MCMap = (function () {
   const R = 4, HALF = 1152, BN = HALF * 2 / R;           /* base grid: 4 blocks a pixel */
   function hash(x, y, s) { let h = x * 374761393 + y * 668265263 + s * 1442695041; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967295; }
@@ -48,7 +48,7 @@ window.MCMap = (function () {
   function draw(canvas, view, opts) {
     build(); const W = canvas.width, H = canvas.height, x = canvas.getContext('2d'); const img = x.createImageData(W, H), D = img.data;
     const L = opts.data || {}, show = opts.show || {}, T = opts.t || {}, B = L.border || { center_x: 0, center_z: 0, size: 1700 }, bd = opts.border || { c: { x: B.center_x, z: B.center_z }, s: B.size };
-    const paper = !opts.terrain, P0 = hex('#d8bf8c'), P1 = hex('#c9ab73'), P2 = hex('#b8955c');
+    const paper = !opts.terrain, P0 = (opts.paper || [])[0] || hex('#d8bf8c'), P1 = (opts.paper || [])[1] || hex('#c9ab73'), P2 = (opts.paper || [])[2] || hex('#b8955c');
     const bx0 = view.cx - W / 2 * view.bpp, bz0 = view.cz - H / 2 * view.bpp;
     const bL = bd.c.x - bd.s / 2, bR = bd.c.x + bd.s / 2, bT = bd.c.z - bd.s / 2, bB = bd.c.z + bd.s / 2;
     const wedges = show.wedges === false ? [] : (L.unseals || []).map(u => ({ ...u, col: hex('#ec952c') })).concat((L.traps || []).map(u => ({ ...u, col: hex('#b30713') })));
@@ -56,7 +56,10 @@ window.MCMap = (function () {
     for (let j = 0; j < H; j++) for (let i = 0; i < W; i++) {
       const bx = bx0 + (i + .5) * view.bpp, bz = bz0 + (j + .5) * view.bpp, k = idx(bx, bz), o = (j * W + i) * 4;
       let c;
-      if (k < 0) c = edge; else if (paper) { const n = hgt[k], d = ((i * 3 + j * 5) & 3); const q = hash(i + Math.round(bx0 / view.bpp), j + Math.round(bz0 / view.bpp), 5); c = q < .04 ? P2 : q < .16 || (n > .58 && d === 0) ? P1 : P0; } else {
+      const W0 = opts.world; let wc = null;
+      if (W0) { const wi = Math.floor((bx - W0.cx) / W0.bpp + W0.w / 2), wj = Math.floor((bz - W0.cz) / W0.bpp + W0.h / 2);
+        if (wi >= 0 && wj >= 0 && wi < W0.w && wj < W0.h) { const q = (wj * W0.w + wi) * 4; if (W0.px[q + 3] > 0) wc = [W0.px[q], W0.px[q + 1], W0.px[q + 2]]; } }
+      if (W0) c = wc || edge; else if (k < 0) c = edge; else if (paper) { const n = hgt[k], d = ((i * 3 + j * 5) & 3); const q = hash(i + Math.round(bx0 / view.bpp), j + Math.round(bz0 / view.bpp), 5); c = q < .04 ? P2 : q < .16 || (n > .58 && d === 0) ? P1 : P0; } else {
         const b = bio[k], e = hgt[k];
         if (b === 0) { const depth = .4 - e; const base = PAL.water; const sh = depth > .08 ? .72 : depth > .03 ? ((i + j) & 1 ? .72 : .86) : .86; c = [base[0] * sh, base[1] * sh, base[2] * sh]; }
         else { const kn = idx(bx, bz - view.bpp), en = kn < 0 ? e : hgt[kn], d = e - en, sh = d > .004 ? 1 : d < -.004 ? .74 : .87; const base = PAL[BIOME[b]]; c = [base[0] * sh, base[1] * sh, base[2] * sh]; }

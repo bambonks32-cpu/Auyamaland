@@ -1,85 +1,31 @@
-/* Auyamaland: every colour on the site.
-   Change a value here and reload. Or open the site with ?colores at the end of the address
-   (auyamaland.../?colores) to pick colours live, then press "Copiar" and paste the result over this file.
-   Only #rrggbb values. Lines starting with /* are notes. */
+/* Auyamaland: every colour on the site, the same family as the Discord invite page.
+   Change a value here and reload. Or type the word colores anywhere on the page (outside a text box) to pick them live,
+   then press "Copiar theme.css" and paste the result over this file. Only #rrggbb values. */
 :root {
+  /* surfaces */
+  --bg: #15100c;          /* the page */
+  --panel: #211812;       /* cards */
+  --panel-2: #2a1e16;     /* raised: hover, inputs, inventory slots */
+  --edge: #3a2a1f;        /* card borders */
+  --edge-soft: #2c2018;   /* dividers inside cards */
+
   /* text */
-  --t1: #ece0c6;          /* main text (cream) */
-  --t2: #b3a28c;          /* quiet text: subtitles, hints, footer */
-  --head: #e2b65e;        /* section titles */
-  --lab: #a395c2;         /* labels in Tu sombra */
+  --text: #eadfd3;        /* main text */
+  --muted: #a8968a;       /* secondary text */
+  --faint: #7d6d62;       /* small print */
 
-  /* the one accent: download button, season fill, tonight's marker */
-  --accent: #ed990a;
-  --accent-hi: #f8c34e;
-  --accent-lo: #893506;
-  --accent-text: #1e0401;
-  --fill: #cf7711;
-  --fill-hi: #f2a62b;
-  --fill-lo: #8f3806;
-  --past: #b98c55;        /* nights already gone on the bar */
-
-  /* the table */
-  --ink: #120b12;         /* every dark outline */
-  --wood: #2c1112;
-  --wood-hi: #381615;
-  --wood-lo: #210c0d;
-  --edge: #190a0c;        /* the table's edge under the night scene */
-  --edge-hi: #290d0e;
-
-  /* relic display case */
-  --case: #39021d;
-  --case-frame: #8a5a2a;
-  --case-frame-lo: #5a3216;
-  --void: #040305;        /* the blacked-out tenth slot */
-
-  /* chest window (Tu sombra) */
-  --chest: #30233b;
-  --chest-hi: #534264;
-  --chest-lo: #1c1425;
-  --slot: #3c2e4b;
-  --slot-hi: #6b5780;
-  --slot-lo: #1d1328;
-  --rotten: #3e4a1c;      /* frame for a plague carrier's own page */
-
-  /* lectern (enchanted books) */
-  --lectern: #391410;
-  --lectern-hi: #5a2318;
-  --lectern-lo: #250606;
-
-  /* paper: map, relic card, account panel */
-  --paper: #e7c577;
-  --paper-lo: #c8a261;
-  --paper-edge: #a07943;
-  --paper-ink: #3a1412;   /* text on paper */
-  --paper-soft: #86694a;  /* quiet text on paper */
-  --paper-title: #6b0423; /* titles on paper */
-
-  /* the side books (wall, rules, download) */
-  --cover: #4b120d;
-  --cover-hi: #6c2b1b;
-  --cover-lo: #2b0607;
-  --page: #edcc73;
-  --page-edge: #c79038;
-  --page-ink: #4c120b;
-  --page-soft: #7c4f22;
-  --tab-wall: #5e1808;
-  --tab-rules: #6b0423;
-  --tab-download: #23572e;
-
-  /* buttons on the books */
-  --btn: #6b0423;
-  --btn-hi: #991220;
-  --btn-lo: #3d031f;
-  --btn-text: #efe3c8;
+  /* accents */
+  --pumpkin: #c9622a;     /* main buttons, tonight, links */
+  --pumpkin-hi: #d8763a;  /* main buttons on hover */
+  --gold: #f0b03c;        /* highlighted text: countdowns, relic names, tags */
+  --blood: #e0573f;       /* errors, the last night */
+  --discord: #5865f2;     /* the Discord button */
+  --ok: #8fd36a;          /* open, online */
+  --xp: #a6f04a;          /* experience level */
 
   /* where an enchantment level comes from */
-  --tier-table: #49b0ec;
-  --tier-found: #4ad890;
-  --tier-ceiling: #ed4357;
-  --tier-commons: #ea55b4;
-
-  --xp: #80ff20;
-  --error: #e0645a;
-  --ok: #5fdba9;
+  --tier-table: #6fb6f5;
+  --tier-found: #62dd95;
+  --tier-ceiling: #f2677f;
+  --tier-commons: #e57ed0;
 }
